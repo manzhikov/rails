@@ -144,12 +144,11 @@ class ActiveStorage::Blob < ActiveRecord::Base
     content_type.start_with?("text")
   end
 
-
-  # Returns the URL of the blob on the service. This URL is intended to be short-lived for security and not used directly
-  # with users. Instead, the +service_url+ should only be exposed as a redirect from a stable, possibly authenticated URL.
-  # Hiding the +service_url+ behind a redirect also gives you the power to change services without updating all URLs. And
-  # it allows permanent URLs that redirect to the +service_url+ to be cached in the view.
-  def service_url(expires_in: ActiveStorage.service_urls_expire_in, disposition: :inline, filename: nil, **options)
+  # Returns the URL of the blob on the service. This returns a permanent URL for public files, and returns a
+  # short-lived URL for private files. Private files are signed, and not for public use. Instead,
+  # the URL should only be exposed as a redirect from a stable, possibly authenticated URL. Hiding the
+  # URL behind a redirect also allows you to change services without updating all URLs.
+  def url(expires_in: ActiveStorage.service_urls_expire_in, disposition: :inline, filename: nil, **options)
     filename = ActiveStorage::Filename.wrap(filename || self.filename)
 
     service.url key, expires_in: expires_in, filename: filename, content_type: content_type_for_service_url,

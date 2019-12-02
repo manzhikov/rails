@@ -1,4 +1,11 @@
-## Rails 6.0.2.1 (December 18, 2019) ##
+*   Deprecate `service_url` methods in favour of `url`.
+
+    Deprecate `Variant#service_url` and `Preview#service_url` to instead use
+    `#url` method to be consistent with `Blob`.
+
+    *Peter Zhu*
+
+*   Permanent URLs for public storage blobs.
 
 *   No changes.
 
