@@ -62,6 +62,7 @@ module ActiveStorage
   mattr_accessor :routes_prefix, default: "/rails/active_storage"
 
   mattr_accessor :replace_on_assign_to_many, default: false
+  mattr_accessor :track_variants, default: false
 
   module Transformers
     extend ActiveSupport::Autoload
